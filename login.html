@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login | SecureApp</title>
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> -->
+</head>
+<style>
+  body {
+  font-family: 'Poppins', sans-serif; /* Use Google Font for a modern look */
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #ffffff;
+}
+main {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  padding: 30px 20px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  color: #333333;
+}
+
+/* App Title */
+.app-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #2575fc;
+  margin-bottom: 20px;
+}
+
+/* Flash Messages */
+.flash-messages {
+  margin-bottom: 20px;
+  background: #ffebe6;
+  color: #d32f2f;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: left;
+}
+
+/* Form Styles */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2575fc;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f9f9f9;
+  color: #333333;
+  transition: all 0.3s ease-in-out;
+}
+
+.form-input:focus {
+  border-color: #2575fc;
+  outline: none;
+  box-shadow: 0 4px 8px rgba(37, 117, 252, 0.2);
+}
+
+/* Button Styles */
+.login-button,
+.logout-link {
+  display: inline-block;
+  padding: 12px 15px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  background-color: #2575fc;
+  color: #ffffff;
+  text-decoration: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 8px rgba(37, 117, 252, 0.2);
+}
+
+.login-button:hover,
+.logout-link:hover {
+  background-color: #6a11cb;
+  box-shadow: 0 8px 16px rgba(106, 17, 203, 0.3);
+}
+
+/* Protected Page Styles */
+.protected-box {
+  margin-top: 20px;
+}
+
+.welcome-message {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 10px;
+}
+
+.info-text {
+  font-size: 16px;
+  color: #666666;
+  margin-bottom: 20px;
+}
+
+/* Logout Link */
+.logout-link {
+  background-color: #ff4d4d;
+}
+
+.logout-link:hover {
+  background-color: #ff6a6a;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  main {
+    padding: 20px;
+  }
+
+  .app-title {
+    font-size: 24px;
+  }
+
+  .form-input {
+    font-size: 12px;
+  }
+
+  .login-button,
+  .logout-link {
+    font-size: 14px;
+  }
+}
+</style>
+<body>
+  <main class="login-container">
+    <section class="login-box">
+      <h1 class="app-title">🔐 SecureApp Login</h1>
+
+      <!-- Flash Messages -->
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="flash-messages">
+            {% for message in messages %}
+              <p class="flash-message">{{ message }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      <!-- Flask-WTF Login Form -->
+      <form method="POST" action="{{ url_for('login') }}" class="login-form">
+  {{ form.csrf_token }}
+
+  <div class="form-group">
+    <label for="username">{{ form.username.label.text }}</label>
+    {{ form.username(class_="form-control", placeholder="Enter your username") }}
+  </div>
+
+  <div class="form-group">
+    <label for="password">{{ form.password.label.text }}</label>
+    {{ form.password(class_="form-control", placeholder="Enter your password") }}
+  </div>
+
+  <div class="form-group">
+    {{ form.submit(class_="btn btn-primary btn-block") }}
+  </div>
+</form>
+    </section>
+  </main>
+</body>
+</html>
